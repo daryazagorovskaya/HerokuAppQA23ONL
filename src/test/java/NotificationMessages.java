@@ -25,7 +25,7 @@ public class NotificationMessages {
     }
 
     @Test
-    public void NotificationMessages () {
+    public void notificationMessages () {
         driver.get("https://the-internet.herokuapp.com/notification_message_rendered");
         driver.findElement(By.linkText("Click here")).click();
         String messageText = driver.findElement(By.xpath("//div[contains(text(),'Action')]")).getText();
