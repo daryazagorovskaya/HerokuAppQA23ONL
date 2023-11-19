@@ -38,7 +38,6 @@ public class Hovers {
         hoversLink.click();
         WebElement no404error = driver.findElement(By.xpath("//h1[contains(text(),'404')]"));
         Assert.assertFalse(no404error.isDisplayed());
-        // других идей как првоерить через ui нет :)
     }
 
 
