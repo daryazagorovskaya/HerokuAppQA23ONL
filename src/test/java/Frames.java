@@ -1,19 +1,18 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class DropDown {
+public class Frames {
+    //    driver.switchTo().frame(driver,findElement(By.id("")))
+//            .defaultcontens
     WebDriver driver;
 
     @BeforeMethod
@@ -26,18 +25,13 @@ public class DropDown {
     }
 
     @Test
-    public void dropDown() {
-        driver.get("https://the-internet.herokuapp.com/dropdown");
-        WebElement dropdown = driver.findElement(By.id("dropdown"));
-        Select select = new Select(dropdown);
-        List<WebElement> options = select.getOptions();
-        Assert.assertEquals(options.get(0).getText(), "Please select an option");
-        Assert.assertEquals(options.get(1).getText(), "Option 1");
-        Assert.assertEquals(options.get(2).getText(), "Option 2");
-        select.selectByVisibleText("Option 1");
-        Assert.assertTrue(select.getFirstSelectedOption().isSelected());
-        select.selectByVisibleText("Option 2");
-        Assert.assertTrue(select.getFirstSelectedOption().isSelected());
+    public void frames() {
+        driver.get("http://the-internet.herokuapp.com/frames");
+        driver.findElement(By.linkText("iFrame")).click();
+        driver.switchTo().frame("mce_0_ifr");
+        String textInFrame = driver.findElement(By.xpath("//p[text()='Your content goes here.']")).getText();
+        Assert.assertEquals(textInFrame, "Your content goes here.", "Test failed");
+        driver.switchTo().defaultContent();
     }
 
     @AfterMethod(alwaysRun = true)
@@ -45,4 +39,3 @@ public class DropDown {
         driver.quit();
     }
 }
-
